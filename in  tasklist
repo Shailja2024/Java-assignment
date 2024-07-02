@@ -1,0 +1,56 @@
+import java.util.ArrayList;
+
+public class TaskList {
+    private ArrayList<Task> tasks;
+
+    public TaskList() {
+        tasks = new ArrayList<>();
+    }
+
+    public void addTask(Task task) {
+        tasks.add(task);
+    }
+
+    public void removeTask(int index) {
+        if (index >= 0 && index < tasks.size()) {
+            tasks.remove(index);
+        } else {
+            System.out.println("Invalid task number. Cannot remove task.");
+        }
+    }
+
+    public void markTaskAsCompleted(int index) {
+        if (index >= 0 && index < tasks.size()) {
+            tasks.get(index).setCompleted(true);
+        } else {
+            System.out.println("Invalid task number. Cannot mark task as completed.");
+        }
+    }
+
+    public void viewTasks() {
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i + 1) + ". " + tasks.get(i).getDescription() + " - " + (tasks.get(i).isCompleted() ? "Completed" : "Not Completed"));
+        }
+    }
+
+    public void viewStatistics() {
+        int completedTasks = 0;
+        for (Task task : tasks) {
+            if (task.isCompleted()) {
+                completedTasks++;
+            }
+        }
+        double completionPercentage = (double) completedTasks / tasks.size() * 100;
+        System.out.println("Total tasks: " + tasks.size());
+        System.out.println("Completed tasks: " + completedTasks);
+        System.out.println("Completion percentage: " + String.format("%.2f", completionPercentage) + "%");
+    }
+
+    public void sortTasksByCompletionStatus() {
+        tasks.sort((t1, t2) -> Boolean.compare(t2.isCompleted(), t1.isCompleted()));
+    }
+
+    public int getTaskCount() {
+        return tasks.size();
+    }
+}
